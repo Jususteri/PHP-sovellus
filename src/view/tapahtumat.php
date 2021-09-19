@@ -8,3 +8,21 @@ $this->layout('template', ['title' => 'Tulevat tapahtumat'])
 ?>
 
 <h1>Tulevat tapahtumat</h1>
+<div class='tapahtumat'>
+<?php
+// PHP-koodilohko, joka käy tapahtumat yksi 
+// kerrallaan lävitse ja tulostaa tapahtumasta div-kokonaisuuden sisältöineen.
+foreach ($tapahtumat as $tapahtuma) {
+
+  $start = new DateTime($tapahtuma['tap_alkaa']);
+  $end = new DateTime($tapahtuma['tap_loppuu']);
+
+  echo "<div>";
+    echo "<div>$tapahtuma[nimi]</div>";
+    echo "<div>" . $start->format('j.n.Y') . "-" . $end->format('j.n.Y') . "</div>";
+  echo "</div>";
+
+}
+
+?>
+</div>
