@@ -1,4 +1,20 @@
+# Nämä säännöt kertovat Apache-palvelimelle, 
+# että jos pyynnössä olevaa tiedostoa tai hakemistoa ei ole olemassa, 
+# niin ohjaa pyyntö index.php-skriptille.
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
+# QSA pyytää Apachea lisäämään pyynnössä olleet parametrit uuden pyynnön loppuun. 
+# L kertoo, että tämä ohjaus on viimeinen suoritettava sääntö.
 RewriteRule ^(.*)$ index.php [QSA,L]
+
+# (.*) Vastaa nollaa tai enemmän mitä tahansa merkkiä (eli joko ei mitään tai 
+# mitä vaan). 
+
+# ^ Vastaa URL-osoitteen polun alkua ja $ vastaa polun loppua.
+
+
+
+# ------------------------------
+# RewriteRule ^(.*)$ public/$1 [L] 
+# Tarkoittaa että: uudelleenkirjoita kaikki alusta loppuun $1 tilalle

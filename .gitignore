@@ -1,2 +1,4 @@
+# Tämä kertoo gitille, että se ei huomioi näissä tiedostoissa ja
+# kansioissa tapahtuvia muutoksia. 
 vendor
 composer.lock

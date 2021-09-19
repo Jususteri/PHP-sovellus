@@ -6,9 +6,8 @@
 // Sen jälkeen init.php kutsuu vendor kansiosta autoload.php:tä ja ajaa sen
 require_once '../src/init.php';
 
-  // Tällä koodirivillä poistetaan polku kutsuttuun skriptiin.
-  // Jos sivua kutsutaan osoitteella /~jluomanm/lanify/public, 
-  // niin rivin jälkeen jää jäljelle /public. 
+  // Osoitteen alusta poistetaan teksti, joka
+  // on määritelty config-asetuksissa.
 
   // config.php:ssä on määritelty, että baseUrl = /~jluomanm/lanify/public
   // $_SERVER['REQUEST_URI'] = URI joka annettiin päästäkseen tälle sivulle
