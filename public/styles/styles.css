@@ -73,3 +73,7 @@
     min-width: 12rem;
     margin: 1rem auto;
   }
+  .error {
+    color: red;
+    font-size: 0.8rem;
+  }
