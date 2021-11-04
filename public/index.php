@@ -1,5 +1,8 @@
 <?php
 
+    // Aloitetaan istunnot.
+    session_start();
+
 // Suoritetaan projektin alustusskripti nimeltä init.php.
 // init.php ajaa aluksi config kansiosta config.php:n ja näin ottaa
 // koko sovellusta koskevat asetukset käyttöön. 
@@ -14,12 +17,6 @@ require_once '../src/init.php';
   $request = str_replace($config['urls']['baseUrl'],'',$_SERVER['REQUEST_URI']);
  
   // Tässä poistetaan vielä selaimelta tulleesta pyynnöstä urlin lopussa
-    // Aloitetaan istunnot.
-    session_start();
-  
-    $_SESSION['user'] = $_POST['email'];
-    header("Location: " . $config['urls']['baseUrl']);
-  
   // olevat parametrit, jotka erotetaan ?-merkillä osoitteesta. 
   // Jos edellisen vaiheen jälkeen pyyntö on muotoa /tapahtuma?id=1, 
   // niin tämän vaiheen jälkeen on jäljellä /tapahtuma.
@@ -53,7 +50,8 @@ require_once '../src/init.php';
           if (isset($_POST['laheta'])) {
             require_once CONTROLLER_DIR . 'kirjaudu.php';
             if (tarkistaKirjautuminen($_POST['email'],$_POST['salasana'])) {
-              echo "Kirjautuminen ok!";
+              $_SESSION['user'] = $_POST['email'];
+              header("Location: " . $config['urls']['baseUrl']);
             } else {
               echo $templates->render('kirjaudu', [ 'error' => ['virhe' => 'Väärä käyttäjätunnus tai salasana!']]);
             }
