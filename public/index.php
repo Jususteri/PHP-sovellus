@@ -44,8 +44,17 @@ require_once '../src/init.php';
       }
       break;
       case '/kirjaudu':
-        echo $templates->render('kirjaudu', [ 'error' => []]);
-        break;
+          if (isset($_POST['laheta'])) {
+            require_once CONTROLLER_DIR . 'kirjaudu.php';
+            if (tarkistaKirjautuminen($_POST['email'],$_POST['salasana'])) {
+              echo "Kirjautuminen ok!";
+            } else {
+              echo $templates->render('kirjaudu', [ 'error' => ['virhe' => 'Väärä käyttäjätunnus tai salasana!']]);
+            }
+          } else {
+            echo $templates->render('kirjaudu', [ 'error' => []]);
+          }
+          break;
       case '/lisaa_tili':
         if (isset($_POST['laheta'])) {
           $formdata = cleanArrayData($_POST);
