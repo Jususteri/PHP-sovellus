@@ -43,6 +43,9 @@ require_once '../src/init.php';
         echo $templates->render('tapahtumanotfound');
       }
       break;
+      case '/kirjaudu':
+        echo $templates->render('kirjaudu', [ 'error' => []]);
+        break;
       case '/lisaa_tili':
         if (isset($_POST['laheta'])) {
           $formdata = cleanArrayData($_POST);
