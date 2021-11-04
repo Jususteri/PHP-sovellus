@@ -74,7 +74,12 @@ require_once '../src/init.php';
         } else {
           echo $templates->render('tili_lisaa', ['formdata' => [], 'error' => []]);
           break;
-        }  
+        } 
+        case "/logout":
+          require_once CONTROLLER_DIR . 'kirjaudu.php';
+          logout();
+          header("Location: " . $config['urls']['baseUrl']);
+          break;
     default:
       echo $templates->render('notfound');
   }    
