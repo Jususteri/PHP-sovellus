@@ -53,7 +53,7 @@ require_once '../src/init.php';
           $tulos = lisaaTili($formdata);
         
           if ($tulos['status'] == "200") {
-            echo "Tili on luotu tunnisteella $tulos[id]";
+            echo $templates->render('tili_luotu', ['formdata' => $formdata]);
             break;
           }
           echo $templates->render('tili_lisaa', ['formdata' => $formdata, 'error' => $tulos['error']]);
