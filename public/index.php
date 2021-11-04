@@ -14,6 +14,12 @@ require_once '../src/init.php';
   $request = str_replace($config['urls']['baseUrl'],'',$_SERVER['REQUEST_URI']);
  
   // Tässä poistetaan vielä selaimelta tulleesta pyynnöstä urlin lopussa
+    // Aloitetaan istunnot.
+    session_start();
+  
+    $_SESSION['user'] = $_POST['email'];
+    header("Location: " . $config['urls']['baseUrl']);
+  
   // olevat parametrit, jotka erotetaan ?-merkillä osoitteesta. 
   // Jos edellisen vaiheen jälkeen pyyntö on muotoa /tapahtuma?id=1, 
   // niin tämän vaiheen jälkeen on jäljellä /tapahtuma.
