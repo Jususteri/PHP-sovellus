@@ -50,6 +50,7 @@ require_once '../src/init.php';
           if (isset($_POST['laheta'])) {
             require_once CONTROLLER_DIR . 'kirjaudu.php';
             if (tarkistaKirjautuminen($_POST['email'],$_POST['salasana'])) {
+              session_regenerate_id();
               $_SESSION['user'] = $_POST['email'];
               header("Location: " . $config['urls']['baseUrl']);
             } else {
