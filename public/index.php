@@ -42,20 +42,23 @@ require_once '../src/init.php';
   // ja suoritetaan sivua vastaava käsittelijä.
   switch ($request) {
     case '/':
-    case '/tapahtumat':
-      require_once MODEL_DIR . 'tapahtuma.php';
-      $tapahtumat = haeTapahtumat();
-      echo $templates->render('tapahtumat',['tapahtumat' => $tapahtumat]);
-      break;
-    case '/tapahtuma':
-      require_once MODEL_DIR . 'tapahtuma.php';
-      $tapahtuma = haeTapahtuma($_GET['id']);
-      if ($tapahtuma) {
-        echo $templates->render('tapahtuma',['tapahtuma' => $tapahtuma]);
-      } else {
-        echo $templates->render('tapahtumanotfound');
-      }
-      break;
+      case '/tapahtuma':
+        require_once MODEL_DIR . 'tapahtuma.php';
+        require_once MODEL_DIR . 'ilmoittautuminen.php';
+        $tapahtuma = haeTapahtuma($_GET['id']);
+        if ($tapahtuma) {
+          if ($loggeduser) {
+            $ilmoittautuminen = haeIlmoittautuminen($loggeduser['idhenkilo'],$tapahtuma['idtapahtuma']);
+          } else {
+            $ilmoittautuminen = NULL;
+          }
+          echo $templates->render('tapahtuma',['tapahtuma' => $tapahtuma,
+                                               'ilmoittautuminen' => $ilmoittautuminen,
+                                               'loggeduser' => $loggeduser]);
+        } else {
+          echo $templates->render('tapahtumanotfound');
+        }
+        break;
       case '/kirjaudu':
           if (isset($_POST['laheta'])) {
             require_once CONTROLLER_DIR . 'kirjaudu.php';
