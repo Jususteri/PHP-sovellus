@@ -9,6 +9,16 @@
 // Sen jälkeen init.php kutsuu vendor kansiosta autoload.php:tä ja ajaa sen
 require_once '../src/init.php';
 
+
+  // Haetaan kirjautuneen käyttäjän tiedot.
+  if (isset($_SESSION['user'])) {
+    require_once MODEL_DIR . 'henkilo.php';
+    $loggeduser = haeHenkilo($_SESSION['user']);
+  } else {
+    $loggeduser = NULL;
+  }
+
+
   // Osoitteen alusta poistetaan teksti, joka
   // on määritelty config-asetuksissa.
 
