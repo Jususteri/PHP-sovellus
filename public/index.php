@@ -42,23 +42,28 @@ require_once '../src/init.php';
   // ja suoritetaan sivua vastaava käsittelijä.
   switch ($request) {
     case '/':
-      case '/tapahtuma':
+      case '/tapahtumat':
         require_once MODEL_DIR . 'tapahtuma.php';
-        require_once MODEL_DIR . 'ilmoittautuminen.php';
-        $tapahtuma = haeTapahtuma($_GET['id']);
-        if ($tapahtuma) {
-          if ($loggeduser) {
-            $ilmoittautuminen = haeIlmoittautuminen($loggeduser['idhenkilo'],$tapahtuma['idtapahtuma']);
-          } else {
-            $ilmoittautuminen = NULL;
-          }
-          echo $templates->render('tapahtuma',['tapahtuma' => $tapahtuma,
-                                               'ilmoittautuminen' => $ilmoittautuminen,
-                                               'loggeduser' => $loggeduser]);
-        } else {
-          echo $templates->render('tapahtumanotfound');
-        }
+        $tapahtumat = haeTapahtumat();
+        echo $templates->render('tapahtumat',['tapahtumat' => $tapahtumat]);
         break;
+        case '/tapahtuma':
+          require_once MODEL_DIR . 'tapahtuma.php';
+          require_once MODEL_DIR . 'ilmoittautuminen.php';
+          $tapahtuma = haeTapahtuma($_GET['id']);
+          if ($tapahtuma) {
+            if ($loggeduser) {
+              $ilmoittautuminen = haeIlmoittautuminen($loggeduser['idhenkilo'],$tapahtuma['idtapahtuma']);
+            } else {
+              $ilmoittautuminen = NULL;
+            }
+            echo $templates->render('tapahtuma',['tapahtuma' => $tapahtuma,
+                                                 'ilmoittautuminen' => $ilmoittautuminen,
+                                                 'loggeduser' => $loggeduser]);
+          } else {
+            echo $templates->render('tapahtumanotfound');
+          }
+          break;
       case '/kirjaudu':
           if (isset($_POST['laheta'])) {
             require_once CONTROLLER_DIR . 'kirjaudu.php';
@@ -72,27 +77,6 @@ require_once '../src/init.php';
           } else {
             echo $templates->render('kirjaudu', [ 'error' => []]);
           }
-          break;
-      case '/lisaa_tili':
-        if (isset($_POST['laheta'])) {
-          $formdata = cleanArrayData($_POST);
-          require_once CONTROLLER_DIR . 'tili.php';
-          $tulos = lisaaTili($formdata);
-        
-          if ($tulos['status'] == "200") {
-            echo $templates->render('tili_luotu', ['formdata' => $formdata]);
-            break;
-          }
-          echo $templates->render('tili_lisaa', ['formdata' => $formdata, 'error' => $tulos['error']]);
-          break;
-        } else {
-          echo $templates->render('tili_lisaa', ['formdata' => [], 'error' => []]);
-          break;
-        } 
-        case "/logout":
-          require_once CONTROLLER_DIR . 'kirjaudu.php';
-          logout();
-          header("Location: " . $config['urls']['baseUrl']);
           break;
           case '/ilmoittaudu':
             if ($_GET['id']) {
@@ -118,6 +102,27 @@ require_once '../src/init.php';
                 header("Location: tapahtumat");  
               }
               break;
+      case '/lisaa_tili':
+        if (isset($_POST['laheta'])) {
+          $formdata = cleanArrayData($_POST);
+          require_once CONTROLLER_DIR . 'tili.php';
+          $tulos = lisaaTili($formdata);
+        
+          if ($tulos['status'] == "200") {
+            echo $templates->render('tili_luotu', ['formdata' => $formdata]);
+            break;
+          }
+          echo $templates->render('tili_lisaa', ['formdata' => $formdata, 'error' => $tulos['error']]);
+          break;
+        } else {
+          echo $templates->render('tili_lisaa', ['formdata' => [], 'error' => []]);
+          break;
+        } 
+        case "/logout":
+          require_once CONTROLLER_DIR . 'kirjaudu.php';
+          logout();
+          header("Location: " . $config['urls']['baseUrl']);
+          break;
     default:
       echo $templates->render('notfound');
   }    
