@@ -112,6 +112,7 @@ function lisaaTili($formdata, $baseurl='') {
           "id"     => $idhenkilo,
           "data"   => $formdata
         ];
+      }
       } else {
         return [
           "status" => 500,
@@ -129,8 +130,6 @@ function lisaaTili($formdata, $baseurl='') {
 
   }
 }
-
-}
 function lahetaVahvavain($email,$url) {
   $message = "Hei!\n\n" . 
              "Olet rekisteröitynyt Lanify-palveluun tällä\n" . 
@@ -145,5 +144,4 @@ function lahetaVahvavain($email,$url) {
              "Terveisin, Lanify-palvelu";
   return mail($email,'Lanify-tilin aktivointilinkki',$message);
 }
-
 ?>
